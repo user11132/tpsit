@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Aggiungiamo uno stile per il bottone */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        /* Stile per il bottone rosso */
+        .start-button {
+            background-color: red;
+            color: white;
+        }
+
+        /* Cambia colore quando il mouse passa sopra */
+        .start-button:hover {
+            background-color: darkred;
+        }
+
+        /* Stile per il bottone per fermare il contatore */
+        .stop-button {
+            background-color: green;
+            color: white;
+        }
+
+        .stop-button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lezione sul setInterval</h1>
+    <p>Il setInterval è un comando per
+        creare un temporizzatore, cioè una chiamata ad una
+        funzione ogni n millisecondi.
+    </p>
+    <button class="start-button" onclick="startCounting()">Avvia il contatore</button>
+    <button class="stop-button" onclick="stopCounting()">Ferma il contatore</button>
+
+    <div>
+        <p id="out1"></p>
+    </div>
+
+<script>
+    const mioOutput = document.getElementById("out1");
+    let counter = 0; // Definiamo una variabile per il contatore
+    let intervalId; // Variabile per memorizzare l'ID dell'intervallo
+
+    // Funzione che incrementa il numero e lo mostra
+    function getTime() {
+        counter++; // Aumenta il valore di counter
+        mioOutput.innerHTML = counter; // Mostra il valore aggiornato
+    }
+
+    // Avvia il setInterval quando viene premuto il pulsante
+    function startCounting() {
+        if (!intervalId) { // Controlla se c'è già un intervallo in corso
+            intervalId = setInterval(getTime, 1000); // Esegui getTime ogni 1000 millisecondi (1 secondo)
+        }
+    }
+
+    // Ferma il setInterval
+    function stopCounting() {
+        clearInterval(intervalId); // Ferma l'intervallo
+        intervalId = null; // Resetta l'ID
+    }
+</script>
+
+</body>
+</html>
