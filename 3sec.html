@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizzatore Numeri Casuali</title>
+    <style>
+        #container {
+            width: 300px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        #numbers {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Estrazione Numeri Casuali</h1>
+        <p id="numbers">Numeri estratti: </p>
+        <p id="average">Media: </p>
+        <button id="startBtn">Inizia</button>
+        <button id="stopBtn" disabled>Ferma</button>
+    </div>
+
+    <script>
+        let numeri = []; // Array per memorizzare i numeri estratti
+        let timer; // Variabile per il temporizzatore
+
+        // Funzione per generare un numero casuale tra 1 e 90
+        function estraiNumero() {
+            let numeroCasuale = Math.floor(Math.random() * 90) + 1; // Numero tra 1 e 90
+            numeri.push(numeroCasuale);
+            aggiornaUI();
+        }
+
+        // Funzione per calcolare la media
+        function calcolaMedia(arr) {
+            if (arr.length === 0) return 0;
+            let somma = arr.reduce((acc, val) => acc + val, 0);
+            return (somma / arr.length).toFixed(2); // Due decimali
+        }
+
+        // Aggiorna l'interfaccia utente
+        function aggiornaUI() {
+            document.getElementById("numbers").textContent = "Numeri estratti: " + numeri.join(", ");
+            document.getElementById("average").textContent = "Media: " + calcolaMedia(numeri);
+        }
+
+        // Gestione dei bottoni
+        document.getElementById("startBtn").addEventListener("click", () => {
+            timer = setInterval(estraiNumero, 3000); // Estrai numero ogni 3 secondi
+            document.getElementById("startBtn").disabled = true;
+            document.getElementById("stopBtn").disabled = false;
+        });
+
+        document.getElementById("stopBtn").addEventListener("click", () => {
+            clearInterval(timer); // Ferma il temporizzatore
+            document.getElementById("startBtn").disabled = false;
+            document.getElementById("stopBtn").disabled = true;
+        });
+    </script>
+</body>
+</html>
