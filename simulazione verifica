@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Numero Casuale</title>
+    <script>
+        function isPrime(num) {
+            if (num < 2) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function generateRandomNumber() {
+            const number = Math.floor(Math.random() * 1000) + 1;
+            const isEven = number % 2 === 0;
+            const primeStatus = isPrime(number) ? "Sì" : "No";
+            const double = number * 2;
+            const half = Math.floor(number / 2);
+            const complement = 1000 - number;
+            const sumWithNeighbors = number - 1 + number + number + 1;
+            const multipliedByPi = (number * 3.14).toFixed(2);
+
+            const output = `
+                Numero: ${number} <br>
+                Pari/Dispari: ${isEven ? "Pari" : "Dispari"} <br>
+                Primo: ${primeStatus} <br>
+                Doppio: ${double} <br>
+                Metà (intera): ${half} <br>
+                Complemento (1000 - n): ${complement} <br>
+                Somma con vicini: ${sumWithNeighbors} <br>
+                Moltiplicato per 3.14: ${multipliedByPi} <br>
+                <hr>
+            `;
+
+            document.getElementById("output").innerHTML = output;
+        }
+
+        window.onload = function() {
+            generateRandomNumber();
+            setInterval(generateRandomNumber, 5000);
+        };
+    </script>
+</head>
+<body>
+    <h1>Timer Numero Casuale</h1>
+    <div id="output"></div>
+</body>
+</html>
