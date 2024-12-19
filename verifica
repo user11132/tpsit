@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore Numeri Casuali</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .risultato {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    .evidenziato {
+      color: #2a9d8f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generatore di Numeri Casuali</h1>
+  <p>Ogni 5 secondi verrà generato un nuovo numero casuale con le sue proprietà.</p>
+
+  <div class="risultato" id="output"></div>
+
+  <script>
+    function èPrimo(numero) {
+      if (numero <= 1) return false;
+      for (let i = 2; i <= Math.sqrt(numero); i++) {
+        if (numero % i === 0) return false;
+      }
+      return true;
+    }
+
+    function generaNumeroCasuale() {
+      const numero = Math.floor(Math.random() * 1000) + 1;
+      const pari = numero % 2 === 0;
+      const numeroPrimo = èPrimo(numero);
+      const doppio = numero * 2;
+      const metà = Math.floor(numero / 2);
+      const complemento = 1000 - numero;
+      const sommaConVicini = numero - 1 + numero + numero + 1;
+      const moltiplicatoPerPiGreco = (numero * 3.14).toFixed(2);
+
+      const output = `
+        <p>Numero generato: <span class="evidenziato">${numero}</span></p>
+        <p>Parità: ${pari ? "Pari" : "Dispari"}</p>
+        <p>Primo: ${numeroPrimo ? "Sì" : "No"}</p>
+        <p>Doppio: ${doppio}</p>
+        <p>Metà (intera): ${metà}</p>
+        <p>Complemento (1000 - n): ${complemento}</p>
+        <p>Somma con i vicini: ${sommaConVicini}</p>
+        <p>Moltiplicato per π (3.14): ${moltiplicatoPerPiGreco}</p>
+      `;
+
+      document.getElementById('output').innerHTML = output;
+    }
+
+    // Avvia il timer per generare un numero ogni 5 secondi
+    setInterval(generaNumeroCasuale, 5000);
+
+    // Genera subito un numero alla prima apertura
+    generaNumeroCasuale();
+  </script>
+</body>
+</html>
