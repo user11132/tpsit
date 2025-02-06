@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- Imposta la codifica dei caratteri come UTF-8 -->
+  <meta charset="UTF-8">
+  <!-- Resetta il comportamento della visualizzazione per dispositivi mobili (rendendo la pagina responsiva) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bottoni con Data/Ora e Tempo</title>
+  <style>
+    /* Stili per il corpo della pagina */
+    body {
+      /* Usa il layout Flexbox per allineare gli elementi */
+      display: flex;
+      flex-direction: column;  /* Posiziona gli elementi in colonna */
+      align-items: center;     /* Centra gli elementi orizzontalmente */
+      justify-content: center; /* Centra gli elementi verticalmente */
+      height: 100vh;           /* Altezza della finestra (100% dell'altezza della viewport) */
+      text-align: center;      /* Centra il testo */
+      background-color: #f4f4f4; /* Colore di sfondo grigio chiaro */
+    }
+
+    /* Stili per i bottoni */
+    button {
+      font-size: 20px;          /* Imposta la dimensione del testo */
+      padding: 15px 30px;       /* Imposta il padding (spazio interno) del bottone */
+      margin: 10px;             /* Imposta lo spazio tra i bottoni */
+      cursor: pointer;         /* Cambia il cursore quando si passa sopra al bottone */
+      border: none;             /* Rimuove il bordo predefinito del bottone */
+      border-radius: 10px;      /* Arrotonda gli angoli del bottone */
+      background-color: #ff0000; /* Imposta il colore di sfondo rosso */
+      color: rgb(54, 53, 53);  /* Imposta il colore del testo su un rosso più scuro */
+    }
+
+    /* Effetto al passaggio del mouse sopra il bottone */
+    button:hover {
+      background-color: #ff0000; /* Cambia il colore di sfondo al passaggio del mouse (in questo caso non cambia) */
+    }
+
+    /* Stili per i paragrafi */
+    p {
+      font-size: 18px;           /* Imposta la dimensione del testo */
+      margin-top: 20px;          /* Aggiunge spazio sopra i paragrafi */
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <!-- I bottoni che attivano la funzione mostraDataOra quando cliccati -->
+    <button onclick="mostraDataOra('Bottone 1')">Bottone 1</button>
+    <button onclick="mostraDataOra('Bottone 2')">Bottone 2</button>
+    <button onclick="mostraDataOra('Bottone 3')">Bottone 3</button>
+    <button onclick="mostraDataOra('Bottone 4')">Bottone 4</button>
+  </div>
+  
+  <!-- Elementi dove verranno visualizzate la data/ora e il tempo trascorso -->
+  <p id="output"></p>
+  <p id="timeOutput"></p>
+
+  <script>
+    // Variabili per il tempo
+    let tempoIniziale = null;  // Variabile che memorizza il tempo del primo click
+    let tempiClick = [];        // Array che memorizza i tempi dei click
+
+    // Funzione che mostra la data/ora e calcola il tempo trascorso dal primo click
+    function mostraDataOra(buttonId) {
+      const dataOra = new Date();  // Crea un nuovo oggetto Date per ottenere la data e ora correnti
+      const formatoData = dataOra.toLocaleString('it-IT');  // Formattta la data e ora secondo le convenzioni italiane
+      document.getElementById("output").innerHTML = ` ${buttonId} - Data e Ora: ${formatoData}`;  // Mostra la data/ora e il bottone cliccato
+
+      // Ottieni il tempo di alta precisione al momento del click
+      const now = performance.now(); 
+
+      // Se è il primo click, memorizza il tempo iniziale
+      if (tempoIniziale === null) {
+        tempoIniziale = now;  // Salva il tempo del primo click
+        document.getElementById("timeOutput").innerHTML = `Primo click registrato al tempo: 0.000 secondi`;  // Mostra il tempo per il primo click
+      } else {
+        // Calcola il tempo trascorso dal primo click
+        const tempoTrascorso = (now - tempoIniziale) / 1000;  // Converte il tempo in secondi
+        tempiClick.push(tempoTrascorso.toFixed(3));  // Aggiungi il tempo dell'attuale click all'array
+        document.getElementById("timeOutput").innerHTML = ` Tempo trascorso dal primo click: ${tempoTrascorso.toFixed(3)} secondi.`;  // Mostra il tempo trascorso dal primo click
+      }
+
+      // Log dei tempi registrati per ogni click
+      console.log("Tempi dei click: ", tempiClick);
+    }
+  </script>
+</body>
+</html>
