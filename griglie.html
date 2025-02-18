@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Griglie con Colori Dinamici</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .grid {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .grid-3x3 {
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+        }
+        .grid-2x2 {
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid grid-2x2">
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+    </div>
+    <div class="grid grid-3x3">
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+        <div class="cell" onclick="changeColor(this)"></div>
+    </div>
+    <script>
+        const colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "cyan", "brown"];
+        
+        function changeColor(cell) {
+            cell.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
