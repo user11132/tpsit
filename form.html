@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form di Messaggio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 60px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            position: relative; /* Necessario per posizionare "Invia" in basso a destra */
+        }
+
+        .form-container h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"],
+        .form-container textarea {
+            width: 60%;  /* Impostiamo la larghezza uguale per nickname e messaggio */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding e border nel calcolo della larghezza */
+        }
+
+        /* Casella del messaggio che si espande automaticamente in altezza */
+        .form-container textarea {
+            min-height: 50px;
+            height: auto;  /* Si espanderà in altezza mentre si scrive */
+            overflow-y: hidden; /* Rimuove la barra di scorrimento verticale */
+        }
+
+        /* Spostiamo ulteriormente la scritta "Invia" più in basso */
+        .form-container .submit-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 20px;
+            position: absolute;
+            bottom: 10px; /* Abbassata la scritta "Invia" */
+            right: 20px;
+        }
+
+        .form-container .submit-link:hover {
+            color: darkblue;
+        }
+
+        .button-privato,
+        .button-pubblico {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            background-color: #f0f0f0;
+        }
+
+        .button-privato:hover,
+        .button-pubblico:hover {
+            background-color: #e0e0e0;
+        }
+
+        .active {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>POST</h2>
+        <form id="messageForm">
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" required>
+
+            <label for="message">Messaggio:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="button" id="privatoButton" class="button-privato">Privato</button>
+            <button type="button" id="pubblicoButton" class="button-pubblico">Pubblico</button>
+
+            <!-- La scritta "Invia" ora è ancora più in basso -->
+            <p class="submit-link" id="submitButton">Invia</p>
+        </form>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('privatoButton').addEventListener('click', function() {
+            document.getElementById('privatoButton').classList.add('active');
+            document.getElementById('pubblicoButton').classList.remove('active');
+        });
+
+        document.getElementById('pubblicoButton').addEventListener('click', function() {
+            document.getElementById('pubblicoButton').classList.add('active');
+            document.getElementById('privatoButton').classList.remove('active');
+        });
+
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const nickname = document.getElementById('nickname').value;
+            const message = document.getElementById('message').value;
+            const tipo = document.querySelector('.active') ? document.querySelector('.active').innerText : 'Nessun tipo selezionato';
+
+            const output = `
+                <h3>Messaggio Inviato</h3>
+                <p><strong>Nickname:</strong> ${nickname}</p>
+                <p><strong>Messaggio:</strong> ${message}</p>
+                <p><strong>Tipo:</strong> ${tipo}</p>
+            `;
+
+            // Visualizza i dettagli
+            document.getElementById('output').innerHTML = output;
+
+            // Nasconde il tasto "Invia"
+            document.getElementById('submitButton').style.display = 'none';
+        });
+
+        // Funzione per espandere la casella di testo mentre si scrive
+        document.getElementById('message').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    </script>
+
+</body>
+</html>
