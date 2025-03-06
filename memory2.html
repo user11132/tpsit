@@ -21,16 +21,18 @@
             height: 150px;
             font-size: 24px;
             border-radius: 10px;
+            background-color: black; /* Imposta il colore di base su nero */
+            transition: transform 0.2s ease-in-out; /* Aggiunge un effetto di ingrandimento morbido */
         }
-        /* Colori specifici per ogni pulsante */
-        #btn1 { background-color: #FFEB3B; } /* Giallo */
-        #btn2 { background-color: #FF7043; } /* Arancione */
-        #btn3 { background-color: #F44336; } /* Rosso */
-        #btn4 { background-color: #03A9F4; } /* Azzurro */
-        /* Stile per i pulsanti attivi (quando sono illuminati) */
-        .active {
-            opacity: 0.7;
+        /* Effetto di ingrandimento quando un pulsante è attivo o viene premuto */
+        .btn-grid:active, .active {
+            transform: scale(1.1);
         }
+        /* Colori specifici per ogni pulsante quando acceso */
+        #btn1.active { background-color: #FFEB3B; } /* Giallo */
+        #btn2.active { background-color: #FF7043; } /* Arancione */
+        #btn3.active { background-color: #F44336; } /* Rosso */
+        #btn4.active { background-color: #03A9F4; } /* Azzurro */
         /* Stile per il messaggio di stato (sequenza corretta o errata) */
         .status-message {
             text-align: center;
@@ -87,96 +89,75 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
-        // Dichiarazione delle variabili globali
-        let sequence = [];       // La sequenza da indovinare
+        // Variabili globali
+        let sequence = [];       // La sequenza generata casualmente
         let userSequence = [];   // La sequenza inserita dall'utente
         let correctCount = 0;    // Contatore delle sequenze corrette
-        let startTime = null;    // Variabile per registrare il tempo di inizio della sequenza
+        let startTime = null;    // Variabile per registrare il tempo di inizio
         let times = [];          // Array per memorizzare i tempi delle sequenze
 
-        // Funzione che inizia il gioco
+        // Funzione per avviare il gioco
         function startGame() {
-            sequence = [];       // Pulisce la sequenza
-            userSequence = [];   // Pulisce la sequenza dell'utente
-            correctCount = 0;    // Ripristina il contatore delle sequenze corrette
-            times = [];          // Pulisce i tempi
-            $("#counter").text("Sequenze corrette: " + correctCount);  // Visualizza il contatore aggiornato
-            $("#timeLog").html(""); // Pulisce il log dei tempi
-            addToSequence();     // Aggiunge una nuova sequenza
-            displaySequence();   // Mostra la sequenza all'utente
-            $("#restartBtn").hide();  // Nasconde il pulsante di riavvio
-            $("#statusMessage").text("");  // Rimuove eventuali messaggi di errore
+            sequence = [];
+            userSequence = [];
+            correctCount = 0;
+            times = [];
+            $("#counter").text("Sequenze corrette: " + correctCount);
+            $("#timeLog").html("");
+            addToSequence();
+            displaySequence();
+            $("#restartBtn").hide();
+            $("#statusMessage").text("");
         }
 
-        // Funzione che aggiunge un nuovo elemento alla sequenza
+        // Aggiunge un elemento casuale alla sequenza
         function addToSequence() {
-            // Aggiunge un numero casuale tra 1 e 4 alla sequenza
             sequence.push(Math.floor(Math.random() * 4) + 1);
         }
 
-        // Funzione che mostra la sequenza all'utente
+        // Mostra la sequenza all'utente
         function displaySequence() {
-            userSequence = [];  // Pulisce la sequenza dell'utente
+            userSequence = [];
             let i = 0;
-            // Funzione che illumina i pulsanti uno alla volta
             const interval = setInterval(() => {
-                const btnId = "#btn" + sequence[i];  // Prende l'ID del pulsante corrispondente nella sequenza
-                $(btnId).addClass('active');   // Aggiunge la classe 'active' per illuminarlo
+                const btnId = "#btn" + sequence[i];
+                $(btnId).addClass('active'); // Accende il pulsante
                 setTimeout(() => {
-                    $(btnId).removeClass('active');  // Rimuove la classe 'active' dopo 500ms
+                    $(btnId).removeClass('active'); // Spegne il pulsante
                 }, 500);
                 i++;
-                // Quando la sequenza è terminata, abilita l'input dell'utente
                 if (i >= sequence.length) {
-                    clearInterval(interval);  // Ferma l'interval
-                    enableUserInput();        // Abilita l'input dell'utente
+                    clearInterval(interval);
+                    enableUserInput();
                 }
             }, 1000);
         }
 
-        // Funzione che abilita l'input dell'utente per inserire la sequenza
+        // Abilita l'input dell'utente
         function enableUserInput() {
             $(".btn-grid").off('click').on('click', function() {
-                const clickedBtn = parseInt(this.id.replace("btn", ""));  // Prende il numero del pulsante cliccato
-                userSequence.push(clickedBtn);  // Aggiunge il pulsante alla sequenza dell'utente
-
-                // Inizia a misurare il tempo quando l'utente clicca il primo pulsante
-                if (userSequence.length === 1) {
-                    startTime = Date.now(); // Inizia il conteggio del tempo
-                }
-
-                // Verifica se la sequenza dell'utente è corretta
+                const clickedBtn = parseInt(this.id.replace("btn", ""));
+                userSequence.push(clickedBtn);
+                if (userSequence.length === 1) startTime = Date.now();
                 if (userSequence[userSequence.length - 1] !== sequence[userSequence.length - 1]) {
-                    $("#statusMessage").text("SEQUENZA ERRATA");  // Mostra messaggio di errore
-                    $("#restartBtn").show();  // Mostra il pulsante di riavvio
-                    $(".btn-grid").off('click');  // Disabilita ulteriori click
+                    $("#statusMessage").text("SEQUENZA ERRATA");
+                    $("#restartBtn").show();
                     return;
                 }
-
-                // Se l'utente ha inserito tutta la sequenza correttamente
                 if (userSequence.length === sequence.length) {
-                    const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2); // Calcola il tempo impiegato
-                    times.push(elapsedTime); // Memorizza il tempo
-                    $("#statusMessage").text("SEQUENZA CORRETTA");  // Mostra il messaggio di successo
-                    setTimeout(() => {
-                        $("#statusMessage").text("");  // Nasconde il messaggio dopo 2 secondi
-                    }, 2000);
-                    $(".btn-grid").off('click');  // Disabilita ulteriori click
-                    correctCount++;  // Incrementa il contatore delle sequenze corrette
-                    $("#counter").text("Sequenze corrette: " + correctCount);  // Visualizza il contatore aggiornato
-
-                    // Aggiungi il tempo della sequenza corretta al log
+                    const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                    times.push(elapsedTime);
+                    $("#statusMessage").text("SEQUENZA CORRETTA");
+                    correctCount++;
+                    $("#counter").text("Sequenze corrette: " + correctCount);
                     $("#timeLog").append(`<div>Sequenza ${correctCount} tempo: ${elapsedTime}s</div>`);
-
-                    addToSequence();  // Aggiunge una nuova sequenza
-                    setTimeout(displaySequence, 1000);  // Mostra la nuova sequenza
+                    addToSequence();
+                    setTimeout(displaySequence, 1000);
                 }
             });
         }
-
-        // Eventi per il pulsante "Start" e "Restart"
-        $("#startBtn").click(startGame);  // Avvia il gioco
-        $("#restartBtn").click(startGame);  // Riavvia il gioco in caso di errore
+        $("#startBtn").click(startGame);
+        $("#restartBtn").click(startGame);
     </script>
 </body>
 </html>
