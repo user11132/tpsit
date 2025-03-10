@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Impostazioni di carattere e viewport per la responsività -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Frasi Casuali</title>
+    <style>
+        /* Stili per il corpo della pagina */
+        body {
+            font-family: Arial, sans-serif; /* Imposta il font */
+            margin: 0; /* Rimuove i margini di default */
+            padding: 0; /* Rimuove il padding di default */
+            display: flex; /* Usa il flexbox per centrare il contenuto */
+            justify-content: center; /* Allinea il contenuto orizzontalmente al centro */
+            align-items: center; /* Allinea il contenuto verticalmente al centro */
+            height: 100vh; /* Imposta l'altezza della pagina a 100% della finestra */
+            background-color: #f4f4f9; /* Colore di sfondo della pagina */
+        }
+
+        /* Stili per il contenitore principale */
+        .container {
+            text-align: center; /* Allinea il testo al centro */
+            background-color: white; /* Colore di sfondo del contenitore */
+            padding: 20px; /* Distanza interna del contenitore */
+            border-radius: 8px; /* Rende gli angoli del contenitore arrotondati */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra al contenitore */
+        }
+
+        /* Stile per il titolo */
+        h1 {
+            margin-bottom: 20px; /* Spazio sotto il titolo */
+        }
+
+        /* Stile per il bottone */
+        button {
+            padding: 10px 20px; /* Distanze interne del bottone */
+            font-size: 16px; /* Dimensione del testo */
+            cursor: pointer; /* Cambia il cursore quando sopra il bottone */
+            background-color: #4CAF50; /* Colore di sfondo del bottone */
+            color: white; /* Colore del testo */
+            border: none; /* Rimuove il bordo del bottone */
+            border-radius: 5px; /* Angoli arrotondati del bottone */
+            margin-top: 10px; /* Spazio sopra il bottone */
+        }
+
+        /* Stile per il div dove viene mostrata la frase generata */
+        #fraseGenerata {
+            margin-top: 20px; /* Spazio sopra il risultato */
+            font-size: 18px; /* Dimensione del testo */
+            color: #333; /* Colore del testo */
+            font-weight: bold; /* Rende il testo in grassetto */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Contenitore principale con il titolo, il bottone e l'area per il risultato -->
+<div class="container">
+    <h1>Generatore di Frasi Casuali</h1>
+    
+    <!-- Bottone per generare una frase -->
+    <button onclick="generaFrase()">Genera una Frase</button>
+
+    <!-- Div che conterrà la frase generata -->
+    <div id="fraseGenerata"></div>
+</div>
+
+<script>
+    // Array di soggetti, verbi e complementi
+    const soggetti = ["Mario", "Luca", "Giulia", "Anna", "Francesco", "Elena", "Roberto", "Sara", "Davide", "Chiara"];
+    const verbi = ["mangia", "corre", "legge", "scrive", "disegna", "parla", "cammina", "guarda", "ascolta", "gioca"];
+    const complemento = ["una mela", "nel parco", "un libro", "una lettera", "un quadro", "al telefono", "sul marciapiede", "la TV", "musica", "a calcio"];
+
+    // Funzione per generare una frase casuale
+    function generaFrase() {
+        // Estrae un soggetto casuale dall'array "soggetti"
+        const soggetto = soggetti[Math.floor(Math.random() * soggetti.length)];
+        
+        // Estrae un verbo casuale dall'array "verbi"
+        const verbo = verbi[Math.floor(Math.random() * verbi.length)];
+        
+        // Estrae un complemento casuale dall'array "complemento"
+        const compl = complemento[Math.floor(Math.random() * complemento.length)];
+
+        // Combina le parole selezionate per formare una frase
+        const frase = `${soggetto} ${verbo} ${compl}`;
+
+        // Mostra la frase generata nel div con id "fraseGenerata"
+        document.getElementById('fraseGenerata').innerText = frase;
+    }
+</script>
+
+</body>
+</html>
