@@ -1,172 +1,190 @@
 <!DOCTYPE html>
-<html lang="it">  <!-- Definisce la lingua del documento HTML come italiano -->
+<html lang="it">
 <head>
-    <meta charset="UTF-8">  <!-- Definisce il set di caratteri come UTF-8 per supportare caratteri speciali -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Imposta la viewport per la responsività su dispositivi mobili -->
-    <title>Memory Sequenziale</title>  <!-- Imposta il titolo della pagina nel browser -->
-    <!-- Link a Bootstrap per gli stili di base -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">  <!-- Include il CSS di Bootstrap da una CDN -->
+    <!-- Definisce la codifica dei caratteri e la compatibilità con i dispositivi mobili -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo della pagina -->
+    <title>Memory Sequenziale</title>
+    <!-- Includiamo il framework CSS di Bootstrap per una gestione rapida del layout e degli stili -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Stile per la parte superiore della pagina (dove ci sono il nome e il pulsante di avvio) */
+        /* Stile per la barra in alto */
         .top-border {
-            border-bottom: 2px solid #000;  /* Aggiunge un bordo inferiore nero */
-            padding: 10px;  /* Distanza interna di 10px */
-            display: flex;  /* Usa il flexbox per disporre gli elementi in orizzontale */
-            justify-content: space-between;  /* Spazia uniformemente gli elementi a sinistra e destra */
-            align-items: center;  /* Allinea gli elementi verticalmente al centro */
+            border-bottom: 2px solid #000; /* Bordo inferiore */
+            padding: 10px;
+            display: flex; /* Usa il flexbox per distribuire gli elementi */
+            justify-content: space-between; /* Spazio tra gli elementi */
+            align-items: center; /* Centra gli elementi verticalmente */
         }
-        /* Stile per i pulsanti del gioco che formano una griglia */
+        
+        /* Stile dei pulsanti del gioco */
         .btn-grid {
-            width: 100%;  /* Assicura che i pulsanti occupino tutta la larghezza delle colonne */
-            height: 150px;  /* Imposta l'altezza dei pulsanti */
-            font-size: 24px;  /* Imposta la dimensione del testo nei pulsanti */
-            border-radius: 10px;  /* Angoli arrotondati per i pulsanti */
-            background-color: black;  /* Colore di base dei pulsanti */
-            transition: transform 0.2s ease-in-out, background-color 0.2s;  /* Aggiunge una transizione per l'effetto di ingrandimento e il cambio di colore */
+            width: 100%; /* Imposta la larghezza del pulsante al 100% della colonna */
+            height: 150px; /* Imposta l'altezza del pulsante */
+            font-size: 24px; /* Imposta la dimensione del testo nel pulsante */
+            border-radius: 10px; /* Angoli arrotondati */
+            transition: transform 0.2s ease-in-out, background-color 0.2s, filter 0.2s; /* Transizioni morbide per gli effetti */
         }
-        /* Effetto di ingrandimento quando un pulsante è attivo o viene premuto */
+
+        /* Colori iniziali dei pulsanti */
+        #btn1 { background-color: #FFEB3B; } /* Giallo */
+        #btn2 { background-color: #F44336; } /* Rosso */
+        #btn3 { background-color: #03A9F4; } /* Blu */
+        #btn4 { background-color: #4CAF50; } /* Verde */
+
+        /* Effetto di ingrandimento del pulsante quando cliccato */
         .btn-grid:active {
-            transform: scale(1.1);  /* Ingrandisce il pulsante del 10% quando viene premuto */
+            transform: scale(0.6); /* Ingrandisce il pulsante al 10% */
         }
-        /* Effetto quando si passa sopra il pulsante con il mouse */
-        #btn1:hover { background-color: #FFEB3B; }  /* Colore giallo per il pulsante 1 al passaggio del mouse */
-        #btn2:hover { background-color: #FF7043; }  /* Colore arancione per il pulsante 2 al passaggio del mouse */
-        #btn3:hover { background-color: #F44336; }  /* Colore rosso per il pulsante 3 al passaggio del mouse */
-        #btn4:hover { background-color: #03A9F4; }  /* Colore azzurro per il pulsante 4 al passaggio del mouse */
-        
-        /* Colori specifici per ogni pulsante quando cliccato o attivato */
-        #btn1.clicked { background-color: #FFEB3B; }  /* Colore giallo per il pulsante 1 quando cliccato */
-        #btn2.clicked { background-color: #FF7043; }  /* Colore arancione per il pulsante 2 quando cliccato */
-        #btn3.clicked { background-color: #F44336; }  /* Colore rosso per il pulsante 3 quando cliccato */
-        #btn4.clicked { background-color: #03A9F4; }  /* Colore azzurro per il pulsante 4 quando cliccato */
-        
-        /* Stile per il messaggio di stato (sequenza corretta o errata) */
+
+        /* Effetto hover: cambia il colore del pulsante quando il mouse ci passa sopra */
+        #btn1:hover { background-color: #FFEB3B; }
+        #btn2:hover { background-color: #F44336; }
+        #btn3:hover { background-color: #03A9F4; }
+        #btn4:hover { background-color: #4CAF50; }
+
+        /* Colori quando il pulsante è cliccato */
+        #btn1.clicked { background-color: #FFEB3B; }
+        #btn2.clicked { background-color: #F44336; }
+        #btn3.clicked { background-color: #03A9F4; }
+        #btn4.clicked { background-color: #4CAF50; }
+
+        /* Aggiungi l'effetto di scurimento durante l'illuminazione */
+        .btn-grid.illuminated {
+            filter: brightness(0.5); /* Riduce la luminosità per scurire il pulsante */
+        }
+
+        /* Stile per i messaggi di stato */
         .status-message {
-            text-align: center;  /* Allinea il testo al centro */
-            font-weight: bold;  /* Imposta il testo come grassetto */
-            font-size: 18px;  /* Imposta la dimensione del font */
-            margin-top: 10px;  /* Distanza dalla parte superiore */
+            text-align: center; /* Centra il testo */
+            font-weight: bold; /* Testo in grassetto */
+            font-size: 18px; /* Dimensione del testo */
+            margin-top: 10px; /* Distanza dal top */
         }
+        
         /* Stile per il contatore delle sequenze corrette */
         .counter {
-            font-size: 20px;  /* Imposta la dimensione del font */
-            font-weight: bold;  /* Imposta il testo come grassetto */
-            margin-top: 20px;  /* Distanza dalla parte superiore */
+            font-size: 20px; /* Dimensione del testo */
+            font-weight: bold; /* Testo in grassetto */
+            margin-top: 20px; /* Distanza dal top */
         }
-        /* Stile per visualizzare il tempo impiegato per ogni sequenza */
+
+        /* Stile per la log delle sequenze con il tempo */
         .time-log {
-            font-size: 16px;  /* Imposta la dimensione del font */
-            margin-top: 10px;  /* Distanza dalla parte superiore */
+            font-size: 16px; /* Dimensione del testo */
+            margin-top: 10px; /* Distanza dal top */
         }
     </style>
 </head>
 <body>
+    <!-- Barra superiore con titolo e pulsante di avvio -->
     <div class="top-border">
-        <!-- Sezione in alto con il nome del giocatore e il pulsante per iniziare -->
-        <div><strong>GIOCO MEMORY LOG</strong></div>  <!-- Mostra il titolo del gioco -->
-        <button id="startBtn" class="btn btn-primary">Start</button>  <!-- Bottone per avviare il gioco -->
+        <div><strong>GIOCO MEMORY LOG</strong></div> <!-- Titolo del gioco -->
+        <button id="startBtn" class="btn btn-primary">Start</button> <!-- Pulsante per avviare il gioco -->
     </div>
+    <!-- Contenuto principale del gioco -->
     <div class="container mt-4">
-        <!-- Griglia di pulsanti (due colonne su schermi piccoli) -->
         <div class="row">
+            <!-- Colonne per ogni pulsante del gioco -->
             <div class="col-6 col-sm-3 mb-3">
-                <button id="btn1" class="btn btn-grid"></button>  <!-- Pulsante 1 -->
+                <button id="btn1" class="btn btn-grid"></button> <!-- Pulsante 1 -->
             </div>
             <div class="col-6 col-sm-3 mb-3">
-                <button id="btn2" class="btn btn-grid"></button>  <!-- Pulsante 2 -->
+                <button id="btn2" class="btn btn-grid"></button> <!-- Pulsante 2 -->
             </div>
             <div class="col-6 col-sm-3 mb-3">
-                <button id="btn3" class="btn btn-grid"></button>  <!-- Pulsante 3 -->
+                <button id="btn3" class="btn btn-grid"></button> <!-- Pulsante 3 -->
             </div>
             <div class="col-6 col-sm-3 mb-3">
-                <button id="btn4" class="btn btn-grid"></button>  <!-- Pulsante 4 -->
+                <button id="btn4" class="btn btn-grid"></button> <!-- Pulsante 4 -->
             </div>
         </div>
-        <!-- Messaggio di stato (sequenza corretta/errata) -->
-        <div id="statusMessage" class="status-message"></div>  <!-- Visualizza il messaggio di stato -->
-        <!-- Pulsante per riavviare il gioco (visibile solo dopo un errore) -->
-        <button id="restartBtn" class="btn btn-danger mt-3" style="display: none;">Restart</button>  <!-- Bottone per riavviare il gioco -->
-        <!-- Contatore che mostra quante sequenze sono state indovinate correttamente -->
-        <div id="counter" class="counter">Sequenze corrette: 0</div>  <!-- Mostra il numero di sequenze corrette -->
-        <!-- Log dei tempi per ogni sequenza corretta -->
-        <div id="timeLog" class="time-log"></div>  <!-- Mostra i tempi delle sequenze corrette -->
+        <!-- Messaggio di stato del gioco -->
+        <div id="statusMessage" class="status-message"></div>
+        <!-- Pulsante per riavviare il gioco (nascosto inizialmente) -->
+        <button id="restartBtn" class="btn btn-danger mt-3" style="display: none;">Restart</button>
+        <!-- Contatore delle sequenze corrette -->
+        <div id="counter" class="counter">Sequenze corrette: 0</div>
+        <!-- Log dei tempi delle sequenze corrette -->
+        <div id="timeLog" class="time-log"></div>
     </div>
     
-    <!-- Inclusione di jQuery per facilitare la gestione degli eventi e manipolazione del DOM -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  <!-- Includi la libreria jQuery -->
-    
+    <!-- Inclusione di jQuery per manipolare il DOM facilmente -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Variabili globali
-        let sequence = [];       // La sequenza generata casualmente
-        let userSequence = [];   // La sequenza inserita dall'utente
-        let correctCount = 0;    // Contatore delle sequenze corrette
-        let startTime = null;    // Variabile per registrare il tempo di inizio
-        let times = [];          // Array per memorizzare i tempi delle sequenze
+        // Variabili globali per gestire il gioco
+        let sequence = []; // La sequenza di numeri che l'utente deve ricordare
+        let userSequence = []; // La sequenza che l'utente ha inserito
+        let correctCount = 0; // Numero di sequenze corrette
+        let startTime = null; // Tempo di inizio per calcolare la durata
+        let times = []; // Array per memorizzare i tempi delle sequenze corrette
 
-        // Funzione per avviare il gioco
+        // Funzione per iniziare un nuovo gioco
         function startGame() {
-            sequence = [];  // Resetta la sequenza
-            userSequence = [];  // Resetta la sequenza dell'utente
-            correctCount = 0;  // Resetta il contatore delle sequenze corrette
-            times = [];  // Resetta l'array dei tempi
-            $("#counter").text("Sequenze corrette: " + correctCount);  // Mostra il numero di sequenze corrette
-            $("#timeLog").html("");  // Resetta il log dei tempi
-            addToSequence();  // Aggiunge una sequenza casuale
-            displaySequence();  // Mostra la sequenza all'utente
-            $("#restartBtn").hide();  // Nasconde il bottone per riavviare
-            $("#statusMessage").text("");  // Resetta il messaggio di stato
+            sequence = []; // Resetta la sequenza
+            userSequence = []; // Resetta la sequenza dell'utente
+            correctCount = 0; // Resetta il contatore delle sequenze corrette
+            times = []; // Resetta i tempi
+            $("#counter").text("Sequenze corrette: " + correctCount); // Mostra il contatore aggiornato
+            $("#timeLog").html(""); // Pulisce il log dei tempi
+            addToSequence(); // Aggiunge un nuovo numero alla sequenza
+            displaySequence(); // Mostra la sequenza sullo schermo
+            $("#restartBtn").hide(); // Nasconde il pulsante di riavvio
+            $("#statusMessage").text(""); // Pulisce il messaggio di stato
         }
 
-        // Aggiunge un elemento casuale alla sequenza
+        // Funzione per aggiungere un numero casuale alla sequenza
         function addToSequence() {
-            sequence.push(Math.floor(Math.random() * 4) + 1);  // Aggiunge un numero random tra 1 e 4 alla sequenza
+            sequence.push(Math.floor(Math.random() * 4) + 1); // Aggiunge un numero random tra 1 e 4
         }
 
-        // Mostra la sequenza all'utente
+        // Funzione per visualizzare la sequenza di pulsanti sullo schermo
         function displaySequence() {
-            userSequence = [];  // Resetta la sequenza dell'utente
+            userSequence = []; // Resetta la sequenza dell'utente
             let i = 0;
             const interval = setInterval(() => {
-                const btnId = "#btn" + sequence[i];  // Ottieni l'ID del pulsante corrispondente
-                $(btnId).addClass('clicked');  // Colora il pulsante
+                const btnId = "#btn" + sequence[i]; // Ottiene l'ID del pulsante da illuminare
+                $(btnId).addClass('illuminated'); // Illumina il pulsante
                 setTimeout(() => {
-                    $(btnId).removeClass('clicked');  // Ripristina il colore dopo 500ms
+                    $(btnId).removeClass('illuminated'); // Spegne l'illuminazione del pulsante
                 }, 500);
                 i++;
-                if (i >= sequence.length) {
-                    clearInterval(interval);  // Termina l'animazione quando tutta la sequenza è stata mostrata
-                    enableUserInput();  // Abilita l'input dell'utente
+                if (i >= sequence.length) { // Se tutta la sequenza è stata mostrata
+                    clearInterval(interval); // Ferma l'interval
+                    enableUserInput(); // Permette all'utente di interagire
                 }
-            }, 1000);  // Mostra ogni pulsante per 1 secondo
+            }, 1000);
         }
 
-        // Abilita l'input dell'utente
+        // Funzione per abilitare l'input dell'utente
         function enableUserInput() {
             $(".btn-grid").off('click').on('click', function() {
-                const clickedBtn = parseInt(this.id.replace("btn", ""));  // Ottieni il numero del pulsante cliccato
-                userSequence.push(clickedBtn);  // Aggiungi il pulsante alla sequenza dell'utente
-                if (userSequence.length === 1) startTime = Date.now();  // Registra il tempo di inizio della sequenza
-                if (userSequence[userSequence.length - 1] !== sequence[userSequence.length - 1]) {
-                    $("#statusMessage").text("SEQUENZA ERRATA");  // Mostra errore se la sequenza è sbagliata
-                    $("#restartBtn").show();  // Mostra il pulsante di riavvio
+                const clickedBtn = parseInt(this.id.replace("btn", "")); // Ottiene il numero del pulsante cliccato
+                userSequence.push(clickedBtn); // Aggiunge il pulsante cliccato alla sequenza dell'utente
+                if (userSequence.length === 1) startTime = Date.now(); // Inizia a cronometrare quando il primo pulsante è cliccato
+                if (userSequence[userSequence.length - 1] !== sequence[userSequence.length - 1]) { 
+                    // Se la sequenza è errata
+                    $("#statusMessage").text("SEQUENZA ERRATA"); // Mostra il messaggio di errore
+                    $("#restartBtn").show(); // Mostra il pulsante di riavvio
                     return;
                 }
-                if (userSequence.length === sequence.length) {
-                    const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);  // Calcola il tempo impiegato
-                    times.push(elapsedTime);  // Aggiungi il tempo all'array
-                    $("#statusMessage").text("SEQUENZA CORRETTA");  // Mostra messaggio di successo
-                    correctCount++;  // Incrementa il contatore delle sequenze corrette
-                    $("#counter").text("Sequenze corrette: " + correctCount);  // Mostra il numero di sequenze corrette
-                    $("#timeLog").append(`<div>Sequenza ${correctCount} tempo: ${elapsedTime}s</div>`);  // Aggiungi il tempo al log
-                    addToSequence();  // Aggiungi un nuovo elemento alla sequenza
-                    setTimeout(displaySequence, 1000);  // Mostra la nuova sequenza dopo un breve intervallo
+                if (userSequence.length === sequence.length) { // Se l'utente ha completato tutta la sequenza
+                    const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2); // Calcola il tempo impiegato
+                    times.push(elapsedTime); // Aggiunge il tempo alla lista
+                    $("#statusMessage").text("SEQUENZA CORRETTA"); // Mostra il messaggio di successo
+                    correctCount++; // Incrementa il numero di sequenze corrette
+                    $("#counter").text("Sequenze corrette: " + correctCount); // Aggiorna il contatore
+                    $("#timeLog").append(`<div>Sequenza ${correctCount} tempo: ${elapsedTime}s</div>`); // Aggiunge il tempo al log
+                    addToSequence(); // Aggiunge un nuovo numero alla sequenza
+                    setTimeout(displaySequence, 1000); // Mostra la nuova sequenza dopo un ritardo
                 }
             });
         }
 
-        $("#startBtn").click(startGame);  // Imposta l'evento di click per avviare il gioco
-        $("#restartBtn").click(startGame);  // Imposta l'evento di click per riavviare il gioco
+        // Eventi per avviare e riavviare il gioco
+        $("#startBtn").click(startGame);
+        $("#restartBtn").click(startGame);
     </script>
 </body>
 </html>
-
