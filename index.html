@@ -8,7 +8,7 @@
     <style>
       body {
         font-family: 'Poppins', sans-serif; /* Font moderno */
-        background-image: url('https://img.pikbest.com/ai/illus_our/20230427/2e7a64fca513f3be8e661c1f662728dc.jpg!w700wp'); /* Sfondo immagine */
+        background-image: url('https://wallpapers.com/images/hd/aesthetic-one-color-bqe5x9p4y71zy23v.jpg'); /* Sfondo immagine */
         background-size: cover; /* Copre tutto lo schermo */
         background-position: center center; /* Centra l'immagine */
         background-repeat: no-repeat; /* Non ripetere l'immagine */
@@ -42,6 +42,14 @@
       }
       .btn-yellow:hover {
         background-color: #ec971f; /* Giallo scuro */
+      }
+      .btn-success {
+        background-color: #28a745; /* Verde */
+        border: none;
+        transition: background-color 0.3s ease;
+      }
+      .btn-success:hover {
+        background-color: #218838; /* Verde scuro */
       }
       .card {
         width: 100%;
@@ -94,9 +102,9 @@
     </div>
 
     <div class="container">
+      <!-- Prima riga con 3 card -->
       <div class="row g-4 justify-content-center">
-        <!-- Prima riga -->
-        <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <div class="col-md-4 d-flex justify-content-center">
           <div class="card">
             <img src="https://img.icons8.com/?size=512&id=21278&format=png" class="card-img-top" alt="CSS">
             <div class="card-body">
@@ -106,7 +114,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <div class="col-md-4 d-flex justify-content-center">
           <div class="card">
             <img src="https://cdn.iconscout.com/icon/free/png-256/free-html-3628838-3030115.png?f=webp&w=128" class="card-img-top" alt="HTML">
             <div class="card-body">
@@ -116,11 +124,7 @@
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Seconda riga con JavaScript e Morra Cinese -->
-      <div class="row g-4 justify-content-center mt-5">
-        <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+        <div class="col-md-4 d-flex justify-content-center">
           <div class="card">
             <img src="https://static.vecteezy.com/system/resources/previews/027/127/463/non_2x/javascript-logo-javascript-icon-transparent-free-png.png" class="card-img-top" alt="JavaScript">
             <div class="card-body">
@@ -130,7 +134,11 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 d-flex justify-content-center">
+      </div>
+      
+      <!-- Seconda riga con 3 card -->
+      <div class="row g-4 justify-content-center mt-5">
+        <div class="col-md-4 d-flex justify-content-center">
           <div class="card">
             <img src="https://alimentazionebambini.e-coop.it/wp-content/uploads/2014/12/Morra-cinese-900x900.webp" class="card-img-top" alt="Morra Cinese">
             <div class="card-body">
@@ -140,9 +148,31 @@
             </div>
           </div>
         </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <img src="https://www.raime.it/P/D/9B2B55411500000000000000000000000000000000000000.bmp/SCOTSMAN-ICE-SRL-FONDO-INTERNO-MOBILE-BIANC-66048801.jpg" class="card-img-top" alt="GIOCO DEL MEMORY">
+            <div class="card-body">
+              <h5 class="card-title">GIOCO DEL MEMORY</h5>
+              <p class="card-text">Gioco del Memory fatto durante le ore di tpsit.</p>
+              <a href="https://user11132.github.io/tpsit/memory2.html" class="btn btn-primary" target="_blank">Il mio gioco del Memory</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <img src="https://img.icons8.com/ios/452/quote.png" class="card-img-top" alt="FRASI CASUALI">
+            <div class="card-body">
+              <h5 class="card-title">FRASI CASUALI</h5>
+              <p class="card-text">Pagina che mostra frasi casuali, realizzata durante le ore di tpsit.</p>
+              <a href="https://user11132.github.io/tpsit/frasicasuali.html" class="btn btn-success" target="_blank">Le mie frasi casuali</a>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
+
