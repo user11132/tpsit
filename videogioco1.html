@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco del Punto Luminoso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        #gameArea {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border: 2px solid #fff;
+            background-color: black;
+            margin-top: 20px;
+        }
+        #point {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: fuchsia; /* Colore fucsia per il pallino */
+            border-radius: 50%;
+            display: none;
+        }
+        .score {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="container">
+
+    <h1 class="my-4 text-center">Gioco del Punto Luminoso</h1>
+
+    <form id="playerForm">
+        <div class="mb-3">
+            <label for="playerName" class="form-label">Nome Giocatore:</label>
+            <input type="text" class="form-control" id="playerName" required>
+        </div>
+        <div class="mb-3">
+            <label for="playerEmail" class="form-label">Email Giocatore:</label>
+            <input type="email" class="form-control" id="playerEmail" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Inizia Gioco</button>
+    </form>
+
+    <div id="gameArea" class="mt-5">
+        <div id="point"></div>
+    </div>
+
+    <div id="score" class="score">
+        <p>Click totali: <span id="clickCount">0</span></p>
+        <p>Tempo totale: <span id="totalTime">0</span> secondi</p>
+        <p>Tempo medio: <span id="averageTime">0</span> secondi</p>
+        <p>Tempo per livello: <span id="levelTime">0</span> secondi</p>
+    </div>
+
+    <script>
+        let playerName = "";
+        let playerEmail = "";
+        let clickCount = 0;
+        let totalTime = 0;
+        let times = [];
+        let level = 1;
+        let levelStartTime = 0;
+        let point = document.getElementById("point");
+        let gameArea = document.getElementById("gameArea");
+
+        // Funzione per far apparire il punto luminoso in una posizione casuale
+        function randomizePoint() {
+            let x = Math.random() * (gameArea.offsetWidth - point.offsetWidth);
+            let y = Math.random() * (gameArea.offsetHeight - point.offsetHeight);
+            point.style.left = x + "px";
+            point.style.top = y + "px";
+            point.style.display = 'block'; // Mostra il punto
+        }
+
+        // Funzione per nascondere il punto luminoso
+        function hidePoint() {
+            point.style.display = 'none'; // Nascondi il punto
+        }
+
+        // Funzione per calcolare il tempo per click e livello
+        function calculateTime() {
+            let clickTime = Date.now();
+            if (times.length > 0) {
+                let timeTaken = (clickTime - times[times.length - 1]) / 1000;
+                totalTime += timeTaken;
+                document.getElementById("totalTime").textContent = totalTime.toFixed(2);
+                let averageTime = totalTime / (clickCount + 1);
+                document.getElementById("averageTime").textContent = averageTime.toFixed(2);
+            }
+            times.push(clickTime);
+        }
+
+        // Gestione dei click
+        point.addEventListener("click", function() {
+            if (clickCount < 10) {
+                calculateTime();
+                clickCount++;
+                document.getElementById("clickCount").textContent = clickCount;
+                hidePoint(); // Nascondi il punto dopo ogni click
+                setTimeout(randomizePoint, Math.random() * 1000); // Fai riapparire il punto in una posizione casuale dopo un breve intervallo
+            } else {
+                // Fine livello: calcola il tempo impiegato per il livello
+                let levelEndTime = Date.now();
+                let levelTime = (levelEndTime - levelStartTime) / 1000; // Calcola tempo per il livello
+                document.getElementById("levelTime").textContent = levelTime.toFixed(2);
+
+                // Aumenta il livello e resetta il contatore dei click
+                level++;
+                clickCount = 0;
+                times = []; // Resetta i tempi per il prossimo livello
+
+                setTimeout(function() {
+                    alert(`Hai completato il livello ${level - 1}! Tempo per livello: ${levelTime.toFixed(2)} secondi. Ora sei al livello ${level}.`);
+                }, 100);
+
+                // Aumenta la velocità del gioco e fai riapparire il punto dopo un intervallo casuale
+                setTimeout(randomizePoint, Math.random() * (1000 / level)); // Diminuisce il tempo di apparizione del punto
+                hidePoint();
+                levelStartTime = Date.now(); // Reset del tempo di inizio per il prossimo livello
+            }
+        });
+
+        // Inizializza il gioco
+        document.getElementById("playerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            playerName = document.getElementById("playerName").value;
+            playerEmail = document.getElementById("playerEmail").value;
+            this.style.display = "none"; // Nascondi il form
+
+            // Inizia il primo livello
+            levelStartTime = Date.now();
+            randomizePoint(); // Fa apparire il punto alla posizione casuale iniziale
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
