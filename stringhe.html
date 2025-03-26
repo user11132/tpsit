@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form di input e funzioni JavaScript</title>
+    <style>
+        /* Aggiungiamo un po' di stile per migliorare l'aspetto */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form di input con operazioni su stringhe</h1>
+
+    <!-- Form di input con due campi di testo -->
+    <form id="inputForm">
+        <label for="inputA">Stringa A:</label>
+        <input type="text" id="inputA" name="inputA">
+        <br><br>
+        <label for="inputB">Stringa B:</label>
+        <input type="text" id="inputB" name="inputB">
+        <br><br>
+        <button type="button" onclick="processStrings()">Elabora</button>
+    </form>
+
+    <!-- Sezione per l'output -->
+    <div id="output" class="output"></div>
+
+    <script>
+        function processStrings() {
+            // Ottieni i valori dei due input
+            var inputA = document.getElementById('inputA').value;
+            var inputB = document.getElementById('inputB').value;
+            var outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Resetta l'output
+
+            // Calcola la lunghezza delle stringhe
+            var lengthA = inputA.length;
+            var lengthB = inputB.length;
+
+            // Funzione 1: Lunghezza delle stringhe
+            outputDiv.innerHTML += '<p>Lunghezza di A: ' + lengthA + '</p>';
+            outputDiv.innerHTML += '<p>Lunghezza di B: ' + lengthB + '</p>';
+
+            // Funzione 2: Restituisce la stringa al contrario
+            function reverseString(str) {
+                return str.split('').reverse().join('');
+            }
+            var reversedA = reverseString(inputA);
+            var reversedB = reverseString(inputB);
+            outputDiv.innerHTML += '<p>A al contrario: ' + reversedA + '</p>';
+            outputDiv.innerHTML += '<p>B al contrario: ' + reversedB + '</p>';
+
+            // Funzione 3: Unisce le due stringhe
+            var concatenated = inputA + inputB;
+            outputDiv.innerHTML += '<p>Stringa unita: ' + concatenated + '</p>';
+
+            // Funzione 4: Somma delle lunghezze e controllo lunghezza stringa B
+            var totalLength = lengthA + lengthB;
+            outputDiv.innerHTML += '<p>Somma delle lunghezze: ' + totalLength + '</p>';
+            if (lengthB > 20) {
+                outputDiv.innerHTML += '<p><strong>B troppo lunga!</strong></p>';
+            }
+        }
+    </script>
+</body>
+</html>
+
