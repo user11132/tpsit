@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unità 5 - Riepilogo</title>
+
+    <style>
+        /* Corpo pagina */
+        body {
+            font-family: "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #777777;  /* Sfondo grigio chiaro */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Layout contenitore centrale */
+        .container {
+            max-width: 960px;
+            background-color: #777777;
+            padding: 20px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #777777;
+        }
+
+        /* Titoli */
+        h1, h2 {
+            font-weight: bold;
+            color: #000;  /* Titoli neri */
+            margin-bottom: 15px;
+        }
+
+        /* Pulsanti */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #ffffff;  /* Pulsanti bianchi */
+            color: #000;  /* Testo dei bottoni nero */
+            border: 1px solid #777777;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: underline;  /* Testo sottolineato nei bottoni */
+        }
+
+        .btn:hover {
+            background-color: #777777;
+            color: #000000;
+            border-color: #777777;
+        }
+
+        /* Aggiungi bordi e stili per la sezione di contenuti */
+        .content {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #777777;
+            border: 1px solid #777777;
+            border-radius: 5px;
+        }
+
+        /* Contenitore per i pulsanti, centrato */
+        .buttons-container {
+            margin-bottom: 20px;
+        }
+
+        /* Layout per il contenuto della pagina */
+        .content h3 {
+            color: #000;  /* Titoli interni neri */
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+    <script>
+        function toggleContent(id) {
+            // Nasconde tutti i contenuti
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+
+            // Mostra solo il contenuto associato al bottone cliccato
+            var content = document.getElementById(id);
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Unità 5 - Riepilogo</h1>
+
+        <!-- Container per i bottoni -->
+        <div class="buttons-container">
+            <button class="btn" onclick="toggleContent('protocolli')">Protocolli di rete</button>
+            <button class="btn" onclick="toggleContent('modello-osi')">Modello OSI</button>
+            <button class="btn" onclick="toggleContent('topologie')">Topologie di rete</button>
+            <button class="btn" onclick="toggleContent('indirizzamento-ip')">Indirizzamento IP</button>
+            <button class="btn" onclick="toggleContent('sicurezza')">Sicurezza informatica</button>
+        </div>
+
+        <h2>Argomenti Trattati</h2>
+
+        <div id="protocolli" class="content">
+            <h3>Protocolli di rete</h3>
+            I protocolli di rete sono regole e convenzioni che governano la comunicazione tra dispositivi su una rete, come Internet. I principali protocolli di rete includono:
+            <ul>
+                <li><strong>TCP/IP:</strong> è il protocollo fondamentale su cui si basa Internet. Il TCP (Transmission Control Protocol) è responsabile dell'affidabilità della trasmissione dei dati, mentre l'IP (Internet Protocol) si occupa dell'indirizzamento e del routing dei pacchetti.</li>
+                <li><strong>HTTP:</strong> è il protocollo utilizzato per trasferire dati sulle pagine web. HTTPS è la versione sicura che utilizza la crittografia SSL/TLS per proteggere i dati durante il trasferimento.</li>
+                <li><strong>FTP:</strong> il File Transfer Protocol permette il trasferimento di file tra computer tramite una rete, come Internet, utilizzando una connessione client-server.</li>
+                <li><strong>SMTP:</strong> è il protocollo usato per l'invio di e-mail da un server a un altro. È responsabile della consegna di messaggi e della gestione delle code di posta.</li>
+                <li><strong>POP3 e IMAP:</strong> sono utilizzati per ricevere e leggere e-mail. POP3 scarica i messaggi sul dispositivo dell'utente, mentre IMAP mantiene i messaggi sul server, consentendo l'accesso da più dispositivi.</li>
+            </ul>
+        </div>
+
+        <div id="modello-osi" class="content">
+            <h3>Modello OSI</h3>
+            Il modello OSI (Open Systems Interconnection) è una struttura concettuale che descrive come i dati vengono trasmessi da un computer a un altro attraverso una rete. È diviso in 7 livelli:
+            <ul>
+                <li><strong>Livello 1 - Fisico:</strong> si occupa del trasferimento dei dati tramite mezzi fisici, come cavi e connettori.</li>
+                <li><strong>Livello 2 - Data Link:</strong> gestisce la comunicazione fra dispositivi nella stessa rete locale, controllando la trasmissione di pacchetti di dati.</li>
+                <li><strong>Livello 3 - Rete:</strong> si occupa dell'instradamento dei dati da un dispositivo a un altro attraverso reti diverse.</li>
+                <li><strong>Livello 4 - Trasporto:</strong> garantisce che i dati vengano trasmessi senza errori e in ordine corretto tra i dispositivi di origine e di destinazione.</li>
+                <li><strong>Livello 5 - Sessione:</strong> gestisce la comunicazione tra applicazioni e stabilisce, mantiene e termina sessioni di comunicazione.</li>
+                <li><strong>Livello 6 - Presentazione:</strong> si occupa della rappresentazione e della codifica dei dati, garantendo che siano comprensibili a entrambe le parti.</li>
+                <li><strong>Livello 7 - Applicazione:</strong> è il livello più alto e riguarda le applicazioni software che interagiscono con l'utente finale, come il browser web o i client di posta elettronica.</li>
+            </ul>
+        </div>
+
+        <div id="topologie" class="content">
+            <h3>Topologie di rete</h3>
+            Le topologie di rete definiscono la disposizione fisica o logica dei dispositivi all'interno di una rete. Le principali topologie sono:
+            <ul>
+                <li><strong>Topologia Bus:</strong> tutti i dispositivi sono connessi a un singolo cavo principale, e i dati vengono trasmessi lungo questo cavo. È semplice ma vulnerabile ai guasti.</li>
+                <li><strong>Topologia Stella:</strong> ogni dispositivo è connesso a un punto centrale (solitamente uno switch o un hub). È facile da gestire e guasti locali non influenzano l'intera rete.</li>
+                <li><strong>Topologia Anello:</strong> i dispositivi sono connessi in un anello chiuso. Ogni dispositivo riceve i dati dal precedente e li inoltra al successivo. I guasti sono difficili da isolare.</li>
+                <li><strong>Topologia Mesh:</strong> ogni dispositivo è connesso a tutti gli altri dispositivi della rete. È molto robusta e resistente ai guasti, ma costosa da implementare.</li>
+            </ul>
+        </div>
+
+        <div id="indirizzamento-ip" class="content">
+            <h3>Indirizzamento IP</h3>
+            L'indirizzamento IP è un sistema utilizzato per identificare in modo univoco i dispositivi all'interno di una rete. Esistono due versioni principali di indirizzi IP:
+            <ul>
+                <li><strong>IPv4:</strong> è il sistema di indirizzamento più diffuso e utilizza un indirizzo a 32 bit, scritto come quattro numeri separati da punti (es. 192.168.0.1). Ha un numero limitato di indirizzi disponibili, motivo per cui è in fase di esaurimento.</li>
+                <li><strong>IPv6:</strong> è la versione più recente e utilizza un indirizzo a 128 bit, permettendo un numero praticamente illimitato di indirizzi. È scritto in formato esadecimale, separato da due punti (es. 2001:0db8:85a3:0000:0000:8a2e:0370:7334).</li>
+            </ul>
+        </div>
+
+        <div id="sicurezza" class="content">
+            <h3>Sicurezza informatica</h3>
+            La sicurezza informatica si occupa di proteggere i sistemi e le informazioni da attacchi, furti e danneggiamenti. Alcuni dei principali rischi includono:
+            <ul>
+                <li><strong>Attacchi informatici:</strong> come virus, worm, e malware, che possono danneggiare i dispositivi e rubare dati sensibili.</li>
+                <li><strong>Furto di identità:</strong> quando malintenzionati ottengono informazioni personali e bancarie per scopi fraudolenti.</li>
+                <li><strong>Phishing:</strong> una tecnica utilizzata per ingannare le persone e indurle a fornire informazioni sensibili, come password e numeri di carta di credito.</li>
+                <li><strong>Firewall e crittografia:</strong> strumenti essenziali per difendersi da attacchi, proteggendo la rete e cifrando i dati in transito.</li>
+            </ul>
+        </div>
+
+        <h2>Laboratorio: Realizzazione di un Cavo Ethernet</h2>
+
+        <button class="btn" onclick="toggleContent('cavo-ethernet')">Procedura</button>
+
+        <div id="cavo-ethernet" class="content">
+            1. Preparazione del cavo.<br>
+            2. Spellatura e ordinamento fili (Standard T568A/T568B).<br>
+            3. Inserimento nei connettori RJ-45.<br>
+            4. Crimpatura e test con il tester di rete.
+        </div>
+
+    </div>
+
+</body>
+
+</html>
