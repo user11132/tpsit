@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div Casuali</title>
+    <style>
+        body {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            transition: all 0.5s;
+        }
+        #blue { background-color: blue; }
+        #yellow { background-color: yellow; }
+    </style>
+</head>
+<body>
+    <div id="blue" class="box"></div>
+    <div id="yellow" class="box"></div>
+
+    <script>
+        function getRandomPosition() {
+            let x = Math.floor(Math.random() * (window.innerWidth - 100));
+            let y = Math.floor(Math.random() * (window.innerHeight - 100));
+            return { x, y };
+        }
+
+        function moveBoxes() {
+            let bluePos = getRandomPosition();
+            let yellowPos = getRandomPosition();
+            
+            let blueBox = document.getElementById('blue');
+            let yellowBox = document.getElementById('yellow');
+            
+            blueBox.style.left = bluePos.x + 'px';
+            blueBox.style.top = bluePos.y + 'px';
+            
+            yellowBox.style.left = yellowPos.x + 'px';
+            yellowBox.style.top = yellowPos.y + 'px';
+
+            setTimeout(checkOverlap, 600);
+        }
+
+        function checkOverlap() {
+            let blueBox = document.getElementById('blue').getBoundingClientRect();
+            let yellowBox = document.getElementById('yellow').getBoundingClientRect();
+
+            let overlap = !(blueBox.right < yellowBox.left || 
+                            blueBox.left > yellowBox.right || 
+                            blueBox.bottom < yellowBox.top || 
+                            blueBox.top > yellowBox.bottom);
+            
+            if (overlap) {
+                document.getElementById('blue').style.backgroundColor = 'red';
+                document.getElementById('yellow').style.backgroundColor = 'red';
+            } else {
+                document.getElementById('blue').style.backgroundColor = 'blue';
+                document.getElementById('yellow').style.backgroundColor = 'yellow';
+            }
+        }
+
+        setInterval(moveBoxes, 1000);
+    </script>
+</body>
+</html>
