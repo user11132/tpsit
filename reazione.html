@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Tempo di Reazione - Cerchio Verde</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      border: 1px solid black;
+      margin-top: 20px;
+    }
+    #restartBtn {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Clicca solo il cerchio VERDE!</h1>
+<p>Tempi di reazione: <span id="reactionTimes"></span></p>
+<canvas id="gameCanvas" width="600" height="400"></canvas>
+<br>
+<button id="restartBtn">Restart</button>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const restartBtn = document.getElementById('restartBtn');
+  const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
+  let currentCircle = null;
+  let reactionTimes = [];
+  let startTime = 0;
+  let intervalId = null;
+  let gameRunning = false;
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function drawCircle() {
+    if (!gameRunning) return;
+
+    const radius = 30;
+    const x = getRandomInt(radius, canvas.width - radius);
+    const y = getRandomInt(radius, canvas.height - radius);
+    const color = colors[getRandomInt(0, colors.length)];
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    currentCircle = { x, y, radius, color };
+    if (color === 'green') {
+      startTime = Date.now(); // Start timing only for green
+    } else {
+      startTime = 0;
+    }
+  }
+
+  function isInsideCircle(x, y, circle) {
+    const dx = x - circle.x;
+    const dy = y - circle.y;
+    return Math.sqrt(dx * dx + dy * dy) < circle.radius;
+  }
+
+  canvas.addEventListener('click', function(event) {
+    if (!currentCircle || !gameRunning) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
+
+    if (isInsideCircle(clickX, clickY, currentCircle)) {
+      if (currentCircle.color === 'green' && startTime > 0) {
+        const reactionTime = Date.now() - startTime;
+        reactionTimes.push(reactionTime);
+        document.getElementById('reactionTimes').textContent = reactionTimes.join(', ') + ' ms';
+
+        stopGame();
+        restartBtn.style.display = 'inline';
+      }
+    }
+  });
+
+  function startGame() {
+    reactionTimes = [];
+    document.getElementById('reactionTimes').textContent = '';
+    restartBtn.style.display = 'none';
+    gameRunning = true;
+    drawCircle(); // Disegna subito
+    intervalId = setInterval(drawCircle, 1000); // Uno ogni secondo
+  }
+
+  function stopGame() {
+    gameRunning = false;
+    clearInterval(intervalId);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  restartBtn.addEventListener('click', startGame);
+
+  // Avvio iniziale
+  startGame();
+</script>
+
+</body>
+</html>
